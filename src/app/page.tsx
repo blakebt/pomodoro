@@ -1,5 +1,13 @@
 'use client'
 
+import { minifySync } from "next/dist/build/swc";
+/* 
+TODO
+
+extract all timer related code into a component
+
+*/
+
 import { useState, useEffect } from "react"
 
 export default function Home() {
@@ -8,6 +16,13 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState<number>(startTime);
   const [buttonPressed, setButtonPressed] = useState<boolean>(false);
   
+  var totalSecondsLeft = currentTime;
+  var minutesLeft = Math.floor(totalSecondsLeft / 60);
+  totalSecondsLeft = totalSecondsLeft - (minutesLeft * 60);
+
+  const formattedMinutes = minutesLeft < 10 ? ('0' + minutesLeft) : minutesLeft;
+  const formattedSeconds = totalSecondsLeft < 10 ? ('0' + totalSecondsLeft) : totalSecondsLeft;
+
   const toggleTimer = () => {
     setButtonPressed(!buttonPressed)    
   }
@@ -31,7 +46,7 @@ export default function Home() {
 
   return (
     <div>
-      <div>{currentTime}</div>
+      <div>{`${formattedMinutes}:${formattedSeconds}`}</div>
       <button className="rounded bg-blue-400 px-2 py-1.5 text-white" onClick={toggleTimer}>{buttonPressed ? 'Pause' : 'Start'}</button>
     </div>
     
