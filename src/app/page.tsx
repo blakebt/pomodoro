@@ -1,6 +1,4 @@
 'use client'
-
-import { minifySync } from "next/dist/build/swc";
 /* 
 TODO
 
@@ -36,7 +34,7 @@ export default function Home() {
 
     if(currentTime < 1) {
       setButtonPressed(false)
-      setCurrentTime(startTime + 1)
+      setCurrentTime(startTime)
     }
   }
 
