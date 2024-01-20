@@ -9,49 +9,34 @@ extract all timer related code into a component
 import { useState, useEffect } from "react"
 
 export default function Home() {
-  // const [minutes, setMinutes] = useState<number>(0);
-  // const [seconds, setSeconds] = useState<number>(0);
-  const pomTime = 5000 // pomodoro time in milliseconds
-  const [formattedMinutes, setFormattedMinutes] = useState<string>('10');
-  const [formattedSeconds, setFormattedSeconds] = useState<string>('00');
-  const [startTime, setStartTime] = useState<number>(0);
-  const [buttonPressed, setButtonPressed] = useState<boolean>(false);
-  
-  const formatTime = (milliseconds: number) => {
-    if(milliseconds <= 0) {
-      setButtonPressed(prev => !prev)
-    }
-    var seconds = milliseconds / 1000
-    var minutes = Math.floor(seconds / 60)
-    seconds = Math.floor(seconds - Math.floor(minutes) * 60)
-    
-    seconds = seconds < 0 ? 0 : seconds
-    minutes = minutes < 0 ? 0 : minutes
-    
-    const mins = minutes < 10 ? ('0' + minutes) : minutes.toString();
-    setFormattedMinutes(mins)
-    const secs = seconds < 10 ? ('0' + seconds) : seconds.toString();
-    setFormattedSeconds(secs)
-  }
 
-  const toggleButton = () => {
-    setStartTime(prev => {
-      return Date.now() - prev
-    })
-    setButtonPressed(!buttonPressed);  
+  const pomTime = 600
+  const shortRestTime = 300
+  const longRestTime = 1200
+
+  const [startTimer, setStartTimer] = useState<boolean>(false)
+  const [time, setTime] = useState<number>(3)
+
+  const minutes = Math.floor(time / 60)
+  const seconds = time - (minutes * 60)
+
+  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes
+  const formattedSeconds = seconds < 10 ? '0' + seconds : seconds
+
+  const toggleTimer = () => {
+    setStartTimer(prev => !prev)
   }
-  
   useEffect(() => {
-    var interval: NodeJS.Timeout
-    if(buttonPressed) {
+    if(startTimer) {
+      const interval = setInterval(() => {
+        time > 0 && setTime(prev => prev - 1)
 
-      /* I'm not entirely sure why I need to subtract 1000 milliseconds here. It prevents the timer from starting 1 second lower than it should
-         TODO figure this out
-      */
-      interval = setInterval(() => formatTime(pomTime - (Date.now() - startTime - 1000)), 1000);
+        time <= 1 && setStartTimer(false)
+        
+      }, 1000)
+      return () => clearInterval(interval)
     }
-    return () => clearInterval(interval)
-  })
+  }, [time, startTimer])
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-orange-400">
@@ -59,7 +44,7 @@ export default function Home() {
         <div className="flex rounded items-center justify-center mx-auto my-5 w-full">
           <div className="flex text-white text-9xl font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
         </div>
-        <button className="rounded drop-shadow-md bg-white px-5 py-2 text-orange-400 text-3xl font-bold w-1/4" onClick={toggleButton}>{buttonPressed ? 'Pause' : 'Start'}</button>
+        <button className="rounded drop-shadow-md bg-white px-5 py-2 text-orange-400 text-3xl font-bold w-1/4" onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button>
       </div>
     </div>
     
