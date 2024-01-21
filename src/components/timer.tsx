@@ -1,26 +1,21 @@
 'use client'
 
 import { useState, useEffect } from "react"
+import { FaCircleQuestion } from "react-icons/fa6"
 
 interface TimerProps {
-  state: string,
+  setTimerState: React.Dispatch<React.SetStateAction<number>>,
+  state: {
+    duration: number,
+    screenColor: string,
+    dispColor: string,
+    textColor: string
+  }
 }
 
-export default function Timer({state}: TimerProps) {
+export default function Timer({setTimerState, state}: TimerProps) {
   const [startTimer, setStartTimer] = useState<boolean>(false)
-
-  var currentTime;
-  if(state === 'FOCUS') {
-    currentTime = 600
-  } else if(state === 'SHORT') {
-    currentTime = 300
-  } else {
-    currentTime = 900
-  }
-
-  const [time, setTime] = useState<number>(currentTime)
-
-  
+  const [time, setTime] = useState<number>(state.duration)
 
   const minutes = Math.floor(time / 60)
   const seconds = time - (minutes * 60)
@@ -31,29 +26,31 @@ export default function Timer({state}: TimerProps) {
   const toggleTimer = () => {
     setStartTimer(prev => !prev)
   }
-  useEffect(() => {
-    
 
+  useEffect(() => {
     if(startTimer) {
       const interval = setInterval(() => {
         time > 0 && setTime(prev => prev - 1)
 
         if(time <= 1) {
-          alert('timer ended')
+          
           setStartTimer(false)
-          setTime(time) // this will be set to the next state (pom, short rest, long rest)
+          setTimerState(prev => (prev + 1) % 6) // changing timer state using `(prev + 1) % 6` to ensure it cycles through each state and loops back
+          
         }
       }, 1000)
       return () => clearInterval(interval)
+    } else {
+      setTime(state.duration) // once the timer stops reset the time to the next time in the sequence
     }
-  }, [time, startTimer])
+  }, [time, startTimer, state.duration])
 
   return (
-    <div className="flex flex-col w-1/4 h-2/6 rounded items-center justify-center bg-orange-300/50">
+    <div className="flex flex-col justify-center items-center">
       <div className="flex rounded items-center justify-center mx-auto my-5 w-full">
-        <div className="flex text-white text-8xl font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
-      </div>
-      <button className="rounded drop-shadow-md bg-white px-5 py-2 text-orange-400 text-3xl font-bold w-1/4" onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button>
-    </div>
+          <div className="flex text-white text-8xl font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
+        </div>
+        <button className={`rounded drop-shadow-md bg-white px-5 py-2 ${state.textColor} text-3xl font-bold`} onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button> 
+    </div> 
   )
 }
