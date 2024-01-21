@@ -1,9 +1,11 @@
-import Timer from "@/components/timer"
+import TimerDisplay from "@/components/TimerDisplay"
 
 export default function Pomodoro() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-orange-400">
-      <Timer state='FOCUS'/>
+    <div>
+      <div>
+        <TimerDisplay />
+      </div>
     </div>
     
   )
