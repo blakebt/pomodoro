@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { FaCircleQuestion } from "react-icons/fa6"
 
 interface TimerProps {
   setTimerState: React.Dispatch<React.SetStateAction<number>>,

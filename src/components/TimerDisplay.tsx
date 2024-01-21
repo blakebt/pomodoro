@@ -35,9 +35,11 @@ export default function TimerDisplay() {
 
   return (
     <div className={`h-screen ${currentState.screenColor}`}>
-      <Link href="/about" className="my-5"><FaCircleQuestion className="ml-5 text-5xl text-slate-300 hover:text-slate-50"/></Link>
-      <div className={`flex flex-col items-center justify-center`}>
-        <div className={`flex flex-col w-1/2 h-full rounded items-center justify-center ${currentState.dispColor}`}>
+      <div className="p-5">
+        <Link href="/about" className="my-5"><FaCircleQuestion className="ml-5 text-5xl text-slate-300 hover:text-slate-50"/></Link>
+      </div>
+      <div className={`flex flex-col items-center justify-center h-2/3`}>
+        <div className={`flex flex-col rounded items-center justify-center w-full md:lg:w-1/4 p-5 h-1/2 ${currentState.dispColor}`}>
           <Timer setTimerState={setTimerState} state={currentState}/>
         </div>
       </div>
