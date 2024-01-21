@@ -6,6 +6,7 @@ interface TimerProps {
   setTimerState: React.Dispatch<React.SetStateAction<number>>,
   state: {
     duration: number,
+    message: string,
     screenColor: string,
     dispColor: string,
     textColor: string
@@ -45,11 +46,11 @@ export default function Timer({setTimerState, state}: TimerProps) {
   }, [time, startTimer, state.duration])
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="flex rounded items-center justify-center mx-auto my-5 w-full">
-          <div className="flex text-white text-8xl font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
-        </div>
-        <button className={`rounded drop-shadow-md bg-white px-5 py-2 ${state.textColor} text-3xl font-bold`} onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button> 
+    <div className="flex flex-col items-center">
+      <div className="rounded mx-auto my-5">
+        <div className=" text-white text-9xl font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
+      </div>
+      <button className={`rounded drop-shadow-md bg-white px-5 py-5 w-64 ${state.textColor} text-3xl font-bold`} onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button> 
     </div> 
   )
 }
