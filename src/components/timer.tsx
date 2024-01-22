@@ -46,11 +46,11 @@ export default function Timer({setTimerState, state}: TimerProps) {
   }, [time, startTimer, state.duration])
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="rounded mx-auto my-5">
-        <div className=" text-white text-9xl font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
+    <div className="flex flex-col items-center w-72 h-48">
+      <div className="mx-auto mb-20">
+        <div className="text-8xl text-white font-bold mb-5">{`${formattedMinutes}:${formattedSeconds}`}</div>
       </div>
-      <button className={`rounded drop-shadow-md bg-white px-5 py-5 w-64 ${state.textColor} text-3xl font-bold`} onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button> 
+      <button className={`rounded shadow-lg bg-white px-5 py-5 w-64 ${state.textColor} text-3xl font-bold`} onClick={toggleTimer}>{startTimer ? 'Pause' : 'Start'}</button> 
     </div> 
   )
 }
