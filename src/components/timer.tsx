@@ -40,7 +40,7 @@ export default function Timer({setTimerState, state}: TimerProps) {
         }
       }, 1000)
       return () => clearInterval(interval)
-    } else {
+    } else if(!startTimer && time <= 1) {
       setTime(state.duration) // once the timer stops reset the time to the next time in the sequence
     }
   }, [time, startTimer, state.duration])
