@@ -9,5 +9,5 @@ Currently the app is only designed for desktop, but there are plans to continue 
 
 # Running
 
-The app is currently hosted using Vercel. The link is provided below:
+The app is currently hosted using Vercel. The link is provided here:
 [pomodoro-sepia-iota.vercel.app](pomodoro-sepia-iota.vercel.app)
